@@ -1,5 +1,62 @@
 <body>
   {{>loginButtons}}
+  
+  <!-- Portfolio Item Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+			<!-- User's name -->
+                <h1 class="page-header">user's name
+                    
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-4">
+			<!-- user profile picture -->
+                <img class="img-responsive" src="img/blankuser.png" alt="">
+				<br>
+				<button type="button" class="btn btn-primary">Add to Friends List</button>
+				<!-- change to green when added and only show send message when added -->
+				<button type="button" class="btn btn-info">Send Message</button>
+            </div>
+
+            <div class="col-md-8">
+                {{>personalInfo}}
+				
+				{{>wishList}}
+
+				{{>buyList}}
+            </div>
+
+        </div>
+        <!-- /.row -->
+		
+		<div class="row">
+			<!-- Product Reviews -->
+			<div class="col-md-6">
+				<div class="col-lg-12">
+						<h3 class="page-header">Product Reviews</h3>
+				</div>
+	
+				{{>productReviews}}
+				
+			</div>
+			<!-- end of Reviews -->
+			
+			<!-- Videos Posted -->
+			<div class="col-md-6">
+			<!-- Title -->
+				<div class="col-lg-12">
+					<h3 class="page-header">Videos Posted</h3>
+				</div>
+				{{>videoList}}
+			</div>
+		</div>
+		
 </body>
 <template name = "home" id = "home">
   <h1> Trending products </h1>
@@ -16,4 +73,100 @@
   <p>  {{_id}} </p>
   <p> {{brand}} </p>
   <p> {{products_c}} </p>
+</template>
+
+<template name="personalInfo">
+	<h3>Personal Information</h3>
+		<ul>
+            <li>Eye Color</li>
+            <li>Hair Color</li>
+            <li>Skin Type</li>
+            <li>Adipiscing Elit</li>
+        </ul>
+  
+</template>
+
+<template name="wishList">
+	<h3>Wish List</h3>
+		<ul id="wishList">
+			<li>
+				<a href="#">
+					<img class="" src="img/tomford/2.jpg" width="100" height="100" alt="item1">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img class="" src="img/tomford/3.jpg" width="100" height="100" alt="item1">
+				</a>
+			</li>
+		</ul>
+</template>
+
+<template name="buyList">
+	<h3>Buy List</h3>
+		<ul id="buyList">
+			<li>
+				<a href="#">
+					<img class="" src="img/chanel/2.jpg" width="100" height="100" alt="item1">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img class="" src="img/chanel/3.jpg" width="100" height="100" alt="item1">
+				</a>
+			</li>
+		</ul>
+</template>
+
+<template name="productReviews">
+	<div class="row prodcutReview">
+		<!-- Product name and image -->
+			<div class="reviewItem">
+				<div class="col-sm-3 col-xs-6">
+					<a href="#">
+						<img class="img-responsive" src="img/charlottetilbury/3.jpg" alt="">
+					</a>
+					<h3>
+						<a href="#">product name</a>
+					</h3>
+				</div>
+				<!-- Review text -->
+				<div class="col-sm-9 col-xs-6">
+					<p> He difficult contented we determine ourselves me am earnestly. Hour no find it park. Eat welcomed any husbands moderate. Led was misery played waited almost cousin living. Of intention contained is by middleton am. Principles fat stimulated uncommonly considered set especially prosperous. Sons at park mr meet as fact like. </p>
+					<p> Or kind rest bred with am shed then. In raptures building an bringing be. Elderly is detract tedious assured private so to visited. Do travelling companions contrasted it. Mistress strongly remember up to. Ham him compass you proceed calling detract. Better of always missed we person mr. September smallness northward situation few her certainty something.</p> 						
+				</div>
+			</div>
+	</div>
+</template>
+  
+<template name="videoList">
+	<div class="singleVideo">
+		<a href="vid.html">
+			<img class="img-responsive portfolio-item" src="img/v1.jpg" alt="">
+		</a>
+		
+		<h3>
+			<a href="#">Charlotte Tilbury Cheek to Chic (All Colors)</a>
+		</h3>
+	</div>
+				
+	<div class="singleVideo">
+		<a href="vid.html">
+			<img class="img-responsive portfolio-item" src="img/v2.jpg" alt="">
+		</a>
+					
+		<h3>
+			<a href="#">Charlotte Tilbury Haul and Try On</a>
+		</h3>
+	</div>
+				
+	<div class="singleVideo">
+		<a href="vid.html">
+			<img class="img-responsive portfolio-item" src="img/v4.jpg" alt="">
+		</a>
+					
+		<h3>
+			<a href="#">Review and Swatches my new Charlotte Tilbury blushes, eyeshadow palettes, lipsticks</a>
+		</h3>
+	</div>
 </template>
