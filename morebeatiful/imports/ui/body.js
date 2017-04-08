@@ -28,6 +28,16 @@ Router.route('/product/:_id', function(){
     }
   });
 });
+Router.route('/profile/:_id', function(){
+  this.subscribe('profile');
+  this.render('profile', {
+    data: function(){
+      console.log(this.params._id);
+      return Profile.findOne({_id: this.params._id});
+    }
+  });
+});
+
 /*Router.route('/product/:input',function(){
     this.render('product');
 });*/
@@ -44,3 +54,24 @@ Template.home.helpers({
     return Products.find({ });
   },
 });
+Template.body.helpers({
+  user_id(){
+    return Meteor.userId();
+  },
+});
+Template.profile.events({
+  "click #new-profile": function(event, template){
+
+  }
+});
+Accounts.onLogin(function() {
+  var exists = Profile.find({owner: Meteor.userId()}).count();
+  if (exists == 0)
+  {
+    Profile.insert({
+          createdAt: new Date(), // current time
+          owner: Meteor.userId(),
+          username: Meteor.user().username,
+        });
+  }
+})
