@@ -1,0 +1,19 @@
+<body>
+  {{>loginButtons}}
+</body>
+<template name = "home" id = "home">
+  <h1> Trending products </h1>
+  <ul>
+    {{#each prod_ducts}}
+    <li>
+      <a href= "/product/{{_id}}"> brand: {{brand}} / name: {{name}}/ {{_id}} </a>
+    </li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name = "product" id = "product">
+  <p>  {{_id}} </p>
+  <p> {{brand}} </p>
+  <p> {{products_c}} </p>
+</template>
