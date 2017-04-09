@@ -2,6 +2,7 @@
   {{>loginButtons}}
   {{#if currentUser}}
   <a href = "/profile/{{user_id}}"> profile </a>
+  <a href = "/"> Home </a>
   {{/if}}
 </body>
 <template name = "home" id = "home">
@@ -30,7 +31,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">More Beautiful</a>
+              <a class="navbar-brand" href="/">More Beautiful</a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -44,6 +45,11 @@
                   <li>
                       <a href="#">Videos</a>
                   </li>
+                  {{#if currentUser}}
+                  <li>
+                      <a href="/profile/{{user_id}}">Profile</a>
+                  </li>
+                  {{/if}}
               </ul>
 
       <div class="col-sm-3 col-md-3 pull-right">
@@ -68,7 +74,7 @@
       <!-- Portfolio Item Heading -->
       <div class="row">
           <div class="col-lg-12">
-              <h1 class="page-header">Cheek to Chic Swish & Pop Blushe
+              <h1 class="page-header">{{products_n}}
 
               </h1>
           </div>
@@ -105,15 +111,37 @@
           </div>
 
     <div class="col-md-3">
-              <h3>Price</h3>
-              <p>
+              <h4>Price</h4>
+              <p>{{products_p}}
         <font size="5">$35 - $45</font>
       </p>
-              <h3>Quality</h3>
-
+              <h4>Quality</h4>
+              <p> {{point}} </p>
+              {{#if currentUser}}
+              <p>
+              <form class = "quality" id ="quality">
+                <select class ="point" id = "point">
+                  <option value = "1">1</option>
+                  <option value = "2">2</option>
+                  <option value = "3">3</option>
+                  <option value = "4">4</option>
+                  <option value = "5">5</option>
+                </select>
+                <input type="submit" class ="submit" id ="submit">
+              </form>
         <font size="6">3.5</font>
-
-      <h3>Add to Wish List?</h3>
+      </p>
+      {{/if}}
+      {{#if currentUser}}
+      <h4>Add to Wish List?</h4>
+      <form class = "wish" id = "wish">
+        <input type ="submit" value ="add">
+      </form>
+      {{/if}}
+      <h4>Add to Owned List?</h4>
+      <form class = "owned" id = "owned">
+        <input type ="submit" value ="add">
+      </form>
                   <i class="fa fa-list fa-2x" ></i>
           </div>
 
@@ -241,8 +269,10 @@
           <div class="row">
               <div class="col-lg-12">
   			<!-- User's name -->
-                  <h1 class="page-header">user's name
-
+                  <h1 class="page-header">
+                    {{#if currentUser}}
+                    {{user_name}}
+                    {{/if}}
                   </h1>
               </div>
           </div>
@@ -253,7 +283,10 @@
 
               <div class="col-md-4">
   			<!-- user profile picture -->
-                  <img class="img-responsive" src="img/blankuser.png" alt="">
+                {{#if currentUser}}
+                <img scr="{{currentUser.profile.picture}}" alt="{{currentUser.username}}">
+                {{/if}}
+
   				<br>
   				<button type="button" class="btn btn-primary">Add to Friends List</button>
   				<!-- change to green when added and only show send message when added -->
@@ -265,7 +298,22 @@
 
   				{{>wishList}}
 
+          <ul>
+            {{#each wish_items}}
+      			<li>
+              <a href = "/product/{{product_id}}"> {{product_name}} </a>
+      			</li>
+            {{/each}}
+      		</ul>
+
   				{{>buyList}}
+          <ul>
+            {{#each own_items}}
+      			<li>
+              <a href = "/product/{{product_id}}"> {{product_name}} </a>
+      			</li>
+            {{/each}}
+      		</ul>
               </div>
 
           </div>
@@ -299,28 +347,85 @@
 
 <template name="personalInfo">
 	<h3>Personal Information</h3>
+  {{#if currentUser}}
 		<ul>
-            <li>Eye Color</li>
-            <li>Hair Color</li>
-            <li>Skin Type</li>
-            <li>Adipiscing Elit</li>
-        </ul>
+            <li>Hair color
+              <form class = "hair" id ="hair">
+                <select class ="color" id = "color">
+                  <option value = "Other">Other</option>
+                  <option value = "Blond">Blond</option>
+                  <option value = "Brunette">Brunette</option>
+                  <option value = "Black">Black</option>
+                  <option value = "Brown">Brown</option>
+                  <option value = "Red">Red</option>
+                  <option value = "Silver">Silver</option>
+                  <option value = "Grey">Grey</option>
+                </select>
+              </form>
+              </li>
+            <li> Eye color
+              <form class = "eye" id ="eye">
+                <select class ="color" id = "color">
+                  <option value = "Other">Other</option>
+                  <option value = "Blue">Blue</option>
+                  <option value = "Brown">Brown</option>
+                  <option value = "Black">Black</option>
+                  <option value = "Hazel">Hazel</option>
+                  <option value = "Violet">Violet</option>
+                  <option value = "Green">Green</option>
+                  <option value = "Gray">Gray</option>
+                </select>
 
+              </form>
+            </li>
+            <li>Skin Type
+              <form class = "skin" id ="skin">
+                <select class ="type" id = "type">
+                  <option value = "Other">Other</option>
+                  <option value = "Very Dry">Very Dry</option>
+                  <option value = "Dry">Dry</option>
+                  <option value = "Normal">Normal</option>
+                  <option value = "Combination">Combination</option>
+                  <option value = "Acne-prone">Acne-prone</option>
+                  <option value = "Oily">Oily</option>
+                  <option value = "Very Oily">Very Oily</option>
+                  <option value = "Sensitive">Sensitive</option>
+                </select>
+              </form>
+            </li>
+            <li>
+              <form class ="sel" id ="sel">
+                <input type="submit" class ="submit" id ="submit">
+              </form>
+            </li>
+        </ul>
+  {{else}}
+  {{#each profiles}}
+  <ul>
+    <li>
+      Hair color: {{hair_color}}
+    </li>
+    <li>
+      Eye color: {{eye_color}}
+    </li>
+    <li>
+      Skin Type: {{skin_type}}
+    </li>
+
+  </ul>
+  {{/each}}
+  {{/if}}
 </template>
 
 <template name="wishList">
 	<h3>Wish List</h3>
-		<ul id="wishList">
+		<ul>
+      {{#each wish_items}}
 			<li>
-				<a href="#">
-					<img class="" src="img/tomford/2.jpg" width="100" height="100" alt="item1">
-				</a>
+        {{product_name}}
+        nfjlnjn
 			</li>
-			<li>
-				<a href="#">
-					<img class="" src="img/tomford/3.jpg" width="100" height="100" alt="item1">
-				</a>
-			</li>
+      {{/each}}
 		</ul>
 </template>
 
