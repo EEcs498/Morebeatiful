@@ -103,6 +103,9 @@ Template.home.helpers({
   prod_ducts(){
     return Products.find({ });
   },
+  user_id(){
+    return Meteor.userId();
+  },
 });
 Template.body.helpers({
   user_id(){

@@ -7,19 +7,24 @@ import { Wish_list } from '../imports/api/wish_list.js';
 import { Review } from '../imports/api/review.js';
 Meteor.startup(() => {
   // code to run on server at startup
-/*  Products.insert({
-         brand: "Charlotte Tilbury", type: "Blush", name: "Cheek to Chic Swish & Pop Blushe", price: "$$$", createdAt: new Date()
+/*
+  Products.insert({
+         brand: "Charlotte Tilbury", type: "Blush", name: "Cheek to Chic Swish & Pop Blushe", price: "$$$", createdAt: new Date(),
+         src : "/Users/stella/Documents/classes winter 2017/eecs498/final project/Morebeatiful/morebeatiful/imports/ui/picture_1.jpg"
        });
   Products.insert({
-         brand: "Cle De Peau", type: "highlighter", name: "Luminizing Face Enhance", price: "$$$$", createdAt: new Date()
+         brand: "Cle De Peau", type: "highlighter", name: "Luminizing Face Enhance", price: "$$$$", createdAt: new Date(),
+         src : "/Users/stella/Documents/classes winter 2017/eecs498/final project/Morebeatiful/morebeatiful/imports/ui/picture_2.jpg"
       });
   Products.insert({
-         brand: "Cle De Peau", type: "Bronzer", name: "Bronzing Powder Don",price: "$$", createdAt: new Date()
+         brand: "Cle De Peau", type: "Bronzer", name: "Bronzing Powder Don",price: "$$", createdAt: new Date(),
+        src : "/Users/stella/Documents/classes winter 2017/eecs498/final project/Morebeatiful/morebeatiful/imports/ui/picture_3.jpg"
       });
   Products.insert({
-             brand: "Chanel", type: "Blush", name: "Powder Blush", price: "$$$",createdAt: new Date()
-      });
-      */
+             brand: "Chanel", type: "Blush", name: "Powder Blush", price: "$$$",createdAt: new Date(),
+         src : "/Users/stella/Documents/classes winter 2017/eecs498/final project/Morebeatiful/morebeatiful/imports/ui/picture_4.jpg"
+      });*/
+
 
 });
 Accounts.onCreateUser(function(options, user) {
