@@ -137,6 +137,32 @@ Template.profile.helpers({
   },
 
 });
+Template.home.events({
+  'keydown .new-task': function(event, instance){
+      console.log("keydown");
+      console.log(event.keyCode);
+      if((event.keyCode == 13)|| (event.keyCode == 32))
+      {
+        event.preventDefault();
+        const target = event.target;
+        const text = target.value;
+        var number = Products.find({name: text}).count();
+        if (number != 0)
+        {
+          var arry = Products.findOne({name: text}, {_id: 1});
+          console.log(arry._id);
+          Router.go('/product/' + arry._id);
+          return false;
+        }
+        else
+        {
+          target.value ='';
+          confirm("No results");
+          return false;
+        }
+      }
+  },
+});
 Template.profile.events({
   "submit #sel": function(event, template){
     event.preventDefault();
