@@ -141,7 +141,7 @@ Template.home.events({
   'keydown .new-task': function(event, instance){
       console.log("keydown");
       console.log(event.keyCode);
-      if((event.keyCode == 13)|| (event.keyCode == 32))
+      if((event.keyCode == 13))
       {
         event.preventDefault();
         const target = event.target;
