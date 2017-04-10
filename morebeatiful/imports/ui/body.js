@@ -36,6 +36,7 @@ Router.route('/profile/:_id', function(){
   this.render('profile', {
     data: function(){
       console.log(this.params._id);
+      Session.set("p_id", this.params._id);
       return Profile.findOne({_id: this.params._id});
     }
   });
@@ -128,8 +129,9 @@ Template.profile.events({
     console.log(eye.color.value);
     console.log(skin.type.value);
     //Profile.update({_id : this._id},{$set:{hair_color : hair.color.value,
-      // eye_color : eye.color.value, skin_type: skin.type.value}});
-    Meteor.call('profile_update', this._id, hair.color.value, eye.color.value, skin.type.value);
+      // eye_color : eye.color.value, skin_type: skin.type.value}});\
+    var _id = Session.get("p_id");
+    Meteor.call('profile_update', _id, hair.color.value, eye.color.value, skin.type.value);
   }
 });
 Template.product.events({
