@@ -4,6 +4,7 @@ import { Products } from '../imports/api/products.js';
 import { Scores } from '../imports/api/scores.js';
 import { Own_list } from '../imports/api/own_list.js';
 import { Wish_list } from '../imports/api/wish_list.js';
+import { Review } from '../imports/api/review.js';
 Meteor.startup(() => {
   // code to run on server at startup
 /*  Products.insert({

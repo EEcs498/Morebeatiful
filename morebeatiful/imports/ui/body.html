@@ -149,6 +149,40 @@
 
       </div>
       <!-- /.row -->
+      <div class="well">
+      		<h4>Submit a Reivew</h4>
+          <form class ="review_i" id = "review_i">
+      		<input type="text" name="review" class="inputBox" id="inputBox" placeholder="Insert review" />
+      		<button type="button" class="clear">Clear</button>
+          </form>
+      		<br>
+
+      		<div class="text-right">
+      			<a class="btn btn-success submitR">Leave a Review</a>
+              </div>
+
+
+              <hr>
+
+      		{{#each getReviews}}
+
+             <div class="row">
+      		<div class="col-md-12">
+                      <h4>{{user_name}}</h4>
+                      <span class="pull-right">{{ratingDate}}</span>
+                      <p>{{reviewText}}</p>
+                  </div>
+              </div>
+
+              <hr>
+      		{{/each}}
+      	</div>
+
+
+
+
+
+
 
       <!-- Related Projects Row -->
       <div class="row">

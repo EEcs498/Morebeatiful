@@ -7,6 +7,7 @@ import { Products } from '../api/products.js';
 import { Scores } from '../api/scores.js';
 import { Wish_list} from '../api/wish_list.js';
 import { Own_list} from '../api/own_list.js';
+import { Review} from '../api/review.js';
 import { Session } from 'meteor/session'
 import './accounts-config.js';
 /*Profile.insert({
@@ -19,6 +20,7 @@ import './accounts-config.js';
     });*/
 
 //Router.route('/product');
+var ReviewIDNumber = 7;
 Router.route('/', {
   template: 'home'
   });
@@ -84,6 +86,17 @@ Template.product.helpers({
   },
   user_id(){
     return Meteor.userId();
+  },
+  getReviews(){
+    return Review.find({product_id: this._id});
+  },
+  /*removeReviws(){
+    Review.remove({$and: [{user_id: Meteor.userId()}, {product_id: this._id}]});
+  },*/
+  user_name: function(){
+    console.log("profile");
+    console.log(Meteor.user().username || Meteor.user().profile.name);
+    return Meteor.user().username || Meteor.user().profile.name;
   },
 });
 Template.home.helpers({
@@ -166,8 +179,37 @@ Template.product.events({
         console.log("no add")
     }
   },
+  'click .submitR'(event) {
+   console.log("Clicked submit");
 
+ // Get value from form element
+    const inputWords = document.getElementById('inputBox').value;
+    console.log("Word submitted is " + inputWords);
+
+/* 	//Gets the rating value
++	var e = document.getElementById("qRating");
++	var ratingNum = e.options[e.selectedIndex].value;
++	console.log("ratingNumber is " + ratingNum); */
+
+   var today = new Date();
+   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+   var rightNow = date+' '+time;
+   console.log("right now is "+ rightNow);
+   console.log("idnub "+ ReviewIDNumber);
+
+   //addReview(ReviewIDNumber++,inputWords,ratingNum,userID,productID)
+   //addReview(ReviewIDNumber++,inputWords,ratingNum);
+   Review.insert({user_id : Meteor.userId(), product_id: this._id, reviewText: inputWords,
+     ratingDate: rightNow});
+   },
+
+
+ 'click .clear'(event) {
+   review_i.inputBox.value = "";
+ },
 });
+
 Accounts.onLogin(function(options, user) {
   var exists = Profile.find({owner: Meteor.userId()}).count();
   if (exists == 0)
