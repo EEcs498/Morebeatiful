@@ -1,0 +1,30 @@
+template name="reviewList">
+	<div class="well">
+		<h4>Submit a Reivew</h4>
+		
+		<input type="text" name="review" id="inputBox" placeholder="Insert review" />
+		<button type="button" class="clear">Clear</button>
+		<br>
+
+		<div class="text-right">
+			<a class="btn btn-success submitR">Leave a Review</a>
+        </div>
+		
+
+        <hr>
+
+		{{#each getReviews}}
+          
+        <div class="row">
+			<div class="col-md-12">
+                <h4>userName</h4>
+                <span class="pull-right">{{ratingDate}}</span>
+                <p>{{reviewText}}</p>
+            </div>
+        </div>
+		
+        <hr>
+		{{/each}}
+	</div>
+
+</template>
