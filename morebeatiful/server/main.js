@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Profile } from '../imports/api/profile.js';
 import { Products } from '../imports/api/products.js';
+import { Friend} from '../imports/api/friend.js';
+import { Friend_re} from '../imports/api/friend.js';
 import { Scores } from '../imports/api/scores.js';
 import { Own_list } from '../imports/api/own_list.js';
 import { Wish_list } from '../imports/api/wish_list.js';

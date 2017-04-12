@@ -19,11 +19,8 @@
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                    <ul class="nav navbar-nav">
                        <li><a href="3.html">About</a></li>
-                       <li><a href="4.html">Products</a> </li>
                        <li><a href="#">Videos</a></li>
-                       {{#if currentUser}}
                        <li><a href = "/profile/{{user_id}}"> profile </a></li>
-                       {{/if}}
                        <li>{{>loginButtons}}</li>
                  </ul>
 
@@ -114,16 +111,11 @@
                       <a href="3.html">About</a>
                   </li>
                   <li>
-                      <a href="4.html">Products</a>
-                  </li>
-                  <li>
                       <a href="#">Videos</a>
                   </li>
-                  {{#if currentUser}}
                   <li>
                       <a href="/profile/{{user_id}}">Profile</a>
                   </li>
-                  {{/if}}
               </ul>
 
       <div class="col-sm-3 col-md-3 pull-right">
@@ -380,6 +372,7 @@
                        <li><a href="3.html">About</a></li>
                        <li><a href="4.html">Products</a> </li>
                        <li><a href="#">Videos</a></li>
+                       <li><a href = "/profile/{{user_id}}"> profile </a></li>
                        <li>{{>loginButtons}}</li>
                  </ul>
 
@@ -439,17 +432,89 @@
               <div class="col-md-4">
   			<!-- user profile picture -->
                 {{#if currentUser}}
-                <img scr="{{currentUser.profile.picture}}" alt="{{currentUser.username}}">
+                <img scr="{{currentUser.profile.picture}}" alt="">
                 {{/if}}
 
   				<br>
-  				<button type="button" class="btn btn-primary">Add to Friends List</button>
+          {{#if c_users}}
+  				<button type="button" class="btn btn-primary" id = "ffff">Add to Friends List</button>
   				<!-- change to green when added and only show send message when added -->
   				<button type="button" class="btn btn-info">Send Message</button>
+          {{/if}}
               </div>
 
-              <div class="col-md-8">
-                  {{>personalInfo}}
+              <div class="col-md-4">
+                <h3>Personal Information</h3>
+                  {{#if c_users}}
+                  {{#each profiles}}
+                  <ul>
+                    <li>
+                      Hair color: {{hair_color}}
+                    </li>
+                    <li>
+                      Eye color: {{eye_color}}
+                    </li>
+                    <li>
+                      Skin Type: {{skin_type}}
+                    </li>
+
+                  </ul>
+                  {{/each}}
+                  {{else}}
+                  <ul>
+                          <li>Hair color
+                            <form class = "hair" id ="hair">
+                              <select class ="color" id = "color">
+                                <option value = "Other">Other</option>
+                                <option value = "Blond">Blond</option>
+                                <option value = "Brunette">Brunette</option>
+                                <option value = "Black">Black</option>
+                                <option value = "Brown">Brown</option>
+                                <option value = "Red">Red</option>
+                                <option value = "Silver">Silver</option>
+                                <option value = "Grey">Grey</option>
+                              </select>
+                            </form>
+                            </li>
+                          <li> Eye color
+                            <form class = "eye" id ="eye">
+                              <select class ="color" id = "color">
+                                <option value = "Other">Other</option>
+                                <option value = "Blue">Blue</option>
+                                <option value = "Brown">Brown</option>
+                                <option value = "Black">Black</option>
+                                <option value = "Hazel">Hazel</option>
+                                <option value = "Violet">Violet</option>
+                                <option value = "Green">Green</option>
+                                <option value = "Gray">Gray</option>
+                              </select>
+
+                            </form>
+                          </li>
+                          <li>Skin Type
+                            <form class = "skin" id ="skin">
+                              <select class ="type" id = "type">
+                                <option value = "Other">Other</option>
+                                <option value = "Very Dry">Very Dry</option>
+                                <option value = "Dry">Dry</option>
+                                <option value = "Normal">Normal</option>
+                                <option value = "Combination">Combination</option>
+                                <option value = "Acne-prone">Acne-prone</option>
+                                <option value = "Oily">Oily</option>
+                                <option value = "Very Oily">Very Oily</option>
+                                <option value = "Sensitive">Sensitive</option>
+                              </select>
+                            </form>
+                          </li>
+                          <li>
+                            <form class ="sel" id ="sel">
+                              <input type="submit" class ="submit" id ="submit">
+                            </form>
+                          </li>
+                      </ul>
+                  {{/if}}
+
+
           {{#if currentUser}}
   				{{>wishList}}
 
@@ -471,6 +536,15 @@
       		</ul>
           {{/if}}
               </div>
+
+          <div class="col-smd-4">
+          <h3>Add Friend</h3>
+          <form class = "add_f" id = "add_f">
+            <input type ="text" class = "add" id ="id" placeholder="Enter Your Friend's Name">
+            <input type ="submit" value ="add">
+          </form>
+
+          </div>
 
           </div>
           <!-- /.row -->
@@ -503,7 +577,8 @@
 
 <template name="personalInfo">
 	<h3>Personal Information</h3>
-  {{#if c_user}}
+  {{#if c_users}}
+  hbhbhjbhjb
 		<ul>
             <li>Hair color
               <form class = "hair" id ="hair">

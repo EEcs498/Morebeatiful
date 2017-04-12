@@ -4,6 +4,8 @@ import './body.html';
 import '../api/profile.js';
 import { Profile } from '../api/profile.js';
 import { Products } from '../api/products.js';
+import { Friend } from '../api/friend.js';
+import { Friend_re } from '../api/friend.js';
 import { Scores } from '../api/scores.js';
 import { Wish_list} from '../api/wish_list.js';
 import { Own_list} from '../api/own_list.js';
@@ -119,22 +121,22 @@ Template.profile.helpers({
   user_name: function(){
     console.log("profile");
     //console.log(Meteor.user().username || Meteor.user().profile.name);
-    console.log(this);
-    console.log(this.username);
     var arry = Profile.findOne({owner: Session.get("p_id")}, {username: 1});
     //return Meteor.user().username || Meteor.user().profile.name;
-    return arry.username;
-  },
-  wish_items: function(){
+
     if (Session.get("p_id") == Meteor.userId())
-    {
-      Session.set("c_user", true);
-    }
-    else
     {
       Session.set("c_user", false);
     }
-    console.log(Session.get("c_user"));
+    else
+    {
+      Session.set("c_user", true);
+    }
+    console.log(Session.get("c_user") + "c_user");
+
+    return arry.username;
+  },
+  wish_items: function(){
     console.log("wish_now")
     return Wish_list.find({
       user_id: Session.get("p_id")
@@ -147,22 +149,16 @@ Template.profile.helpers({
       });
   },
   profiles: function(){
-    if (Session.get("p_id") == Meteor.userId())
-    {
-      Session.set("c_user", true);
-    }
-    else
-    {
-      Session.set("c_user", false);
-    }
-    console.log(Session.get("c_user"));
     return Profile.find({
-      user_id: Session.get("p_id")
+      owner: Session.get("p_id")
       });
   },
-  c_user: function(){
+  c_users: function(){
     return Session.get("c_user")
   },
+  user_id: function(){
+    return Meteor.userId();
+  }
 
 });
 Template.home.events({
@@ -202,7 +198,42 @@ Template.profile.events({
       // eye_color : eye.color.value, skin_type: skin.type.value}});\
     var _id = Session.get("p_id");
     Meteor.call('profile_update', _id, hair.color.value, eye.color.value, skin.type.value);
-  }
+  },
+  "click #ffff": function(event, template){
+    event.preventDefault();
+    var user1 = Meteor.userId();
+    var user2 = Session.get("p_id");
+    if(user1 != user2)
+    {
+      if (Friend_re.find({$and: [{user_f: user1}, {user_t: user2}]}).count() == 0)
+      {
+        if(Friend_re.find({$and: [{user_f: user2}, {user_t: user1}]}).count() != 0)
+        {
+          console.log("1");
+        }
+        else
+        {
+          confirm("Requeste Sent");
+          Friend_re.insert({
+            user_f: user1, user_t: user2, createdAt: new Date(),
+          });
+          console.log(Session.get("p_id"));
+          console.log(Meteor.userId());
+        }
+      }
+      else
+      {
+        confirm("Requeste Already Sent");
+      }
+    }
+    else{
+      confirm("You are already your own friend");
+    }
+  },
+  "submit #add_f": function(event, template){
+    console.log("123");
+    return false;
+  },
 });
 Template.product.events({
   "submit #quality": function(event, template){
