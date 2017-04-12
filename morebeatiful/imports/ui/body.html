@@ -224,7 +224,7 @@
 
              <div class="row">
       		<div class="col-md-12">
-                      <h4>{{user_name}}</h4>
+                      <a href="/profile/{{reviewer_id}}"><h4>{{username}}</h4></a>
                       <span class="pull-right">{{ratingDate}}</span>
                       <p>{{reviewText}}</p>
                   </div>
@@ -435,6 +435,7 @@
                 <img scr="{{currentUser.profile.picture}}" alt="">
                 {{/if}}
 
+
   				<br>
           {{#if c_users}}
   				<button type="button" class="btn btn-primary" id = "ffff">Add to Friends List</button>
@@ -537,14 +538,39 @@
           {{/if}}
               </div>
 
+          {{#if c_users}}
+          {{else}}
           <div class="col-smd-4">
           <h3>Add Friend</h3>
           <form class = "add_f" id = "add_f">
-            <input type ="text" class = "add" id ="id" placeholder="Enter Your Friend's Name">
+            <input type ="text" class = "add" id ="add" placeholder="Enter Your Friend's Name">
             <input type ="submit" value ="add">
           </form>
+          <h3>Friend Request</h3>
+          <ul>
+          {{#each friend_f}}
+          <li>Request Sent from {{usern_f}}
+            <button class = "accept" id = {{user_f}}>
+              accept
+            </button>
+            <button class = "decline" id = {{user_f}}>
+              decline
+            </button>
+          </li>
+          {{/each}}
+        </ul>
+        <h3> Friends </h3>
+        {{#each friends}}
+        <ul>
+          <li>
 
+            <a href = "/profile/{{f2}}"> {{f2_n}} </a>
+          </li>
+        </ul>
+        {{/each}}
           </div>
+          {{/if}}
+
 
           </div>
           <!-- /.row -->

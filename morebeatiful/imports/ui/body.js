@@ -158,6 +158,14 @@ Template.profile.helpers({
   },
   user_id: function(){
     return Meteor.userId();
+  },
+  friend_f: function(){
+    console.log(Session.get("p_id"));
+    console.log(Friend_re.find({user_t: Session.get("p_id")}));
+    return Friend_re.find({user_t: Session.get("p_id")});
+  },
+  friends: function(){
+    return Friend.find({f1:Meteor.userId()});
   }
 
 });
@@ -232,8 +240,69 @@ Template.profile.events({
   },
   "submit #add_f": function(event, template){
     console.log("123");
-    return false;
+    event.preventDefault();
+    var name = add_f.add.value;
+    var exists = Profile.find({username: name}).count();
+    if(exists == 0)
+    {
+      confirm("User Not Found");
+    }
+    else
+    {
+      var user1 = Meteor.userId();
+      var user = Profile.findOne({username: name}, {owner: 1});
+      var user2 = user.owner;
+      var user_n = (Profile.findOne({owner: Meteor.userId()}, {username: 1})).username;
+      if(user1 != user2)
+      {
+        if (Friend_re.find({$and: [{user_f: user1}, {user_t: user2}]}).count() == 0)
+        {
+          if(Friend_re.find({$and: [{user_f: user2}, {user_t: user1}]}).count() != 0)
+          {
+            console.log("1");
+          }
+          else
+          {
+            confirm("Requeste Sent");
+            Friend_re.insert({
+              user_f: user1, user_t: user2, createdAt: new Date(), usern_f: user_n
+            });
+            console.log(Session.get("p_id"));
+            console.log(Meteor.userId());
+          }
+        }
+        else
+        {
+          confirm("Requeste Already Sent");
+        }
+      }
+      else{
+        confirm("You are already your own friend");
+      }
+    }
+    console.log(name);
   },
+  "click .accept": function(event){
+    event.preventDefault();
+    console.log("click");
+    console.log(event.target.id);
+    var arry = Profile.findOne({owner: event.target.id}, {username: 1});
+    var f2_n = arry.username;
+    arry = Profile.findOne({owner: Meteor.userId()}, {username: 1});
+    var f1_n = arry.username;
+    Friend.insert({f1: Meteor.userId(), f2: event.target.id, f1_n: f1_n, f2_n: f2_n});
+    Friend.insert({f2: Meteor.userId(), f1: event.target.id, f1_n: f2_n, f2_n: f1_n});
+    Meteor.call('remove_f', event.target.id, Meteor.userId());
+    confirm("Accepted");
+  },
+  "click .decline": function(event){
+    event.preventDefault();
+    console.log("click");
+    console.log(event.target.id);
+    Meteor.call('remove_f', event.target.id, Meteor.userId());
+    confirm("Do you really want to decline?");
+  },
+
 });
 Template.product.events({
   "submit #quality": function(event, template){
@@ -288,7 +357,7 @@ Template.product.events({
 
    //addReview(ReviewIDNumber++,inputWords,ratingNum,userID,productID)
    //addReview(ReviewIDNumber++,inputWords,ratingNum);
-   Review.insert({user_id : Meteor.userId(), product_id: this._id, reviewText: inputWords,
+   Review.insert({reviewer_id : Meteor.userId(), username: Meteor.user().username || Meteor.user().profile.name, product_id: this._id, reviewText: inputWords,
      ratingDate: rightNow});
    },
 
