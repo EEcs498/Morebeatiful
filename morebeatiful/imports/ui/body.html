@@ -1,8 +1,4 @@
 <body>
-  {{#if currentUser}}
-  <a href = "/profile/{{user_id}}"> profile </a>
-  <a href = "/"> Home </a>
-  {{/if}}
 </body>
 <template name = "home" id = "home">
 
@@ -99,7 +95,7 @@
 
 <template name = "product" id = "product">
   <!-- Navigation -->
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-inverse" role="navigation">
       <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -161,19 +157,9 @@
 
       <!-- Portfolio Item Row -->
       <div class="row">
-
           <div class="col-md-4">
-              <img class="img-responsive" src="img/charlottetilbury/1.jpg" alt="">
+              <img class="img-responsive" src="{{src}}" alt="">
       <br>
-      <div class="col-md-4">
-        <img class="img-responsive" src="img/cheektochic1.jpg" alt="">
-      </div>
-      <div class="col-md-4">
-        <img class="img-responsive" src="img/cheektochic2.jpg" alt="">
-      </div>
-      <div class="col-md-4">
-        <img class="img-responsive" src="img/cheektochic3.jpg" alt="">
-      </div>
           </div>
 
           <div class="col-md-5">
@@ -464,7 +450,7 @@
 
               <div class="col-md-8">
                   {{>personalInfo}}
-
+          {{#if currentUser}}
   				{{>wishList}}
 
           <ul>
@@ -483,6 +469,7 @@
       			</li>
             {{/each}}
       		</ul>
+          {{/if}}
               </div>
 
           </div>
@@ -516,7 +503,7 @@
 
 <template name="personalInfo">
 	<h3>Personal Information</h3>
-  {{#if currentUser}}
+  {{#if c_user}}
 		<ul>
             <li>Hair color
               <form class = "hair" id ="hair">

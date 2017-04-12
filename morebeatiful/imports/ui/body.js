@@ -37,7 +37,7 @@ Router.route('/profile/:_id', function(){
   this.subscribe('profile');
   this.render('profile', {
     data: function(){
-      console.log(this.params._id);
+      console.log(this.params._id + "1");
       Session.set("p_id", this.params._id);
       return Profile.findOne({_id: this.params._id});
     }
@@ -62,6 +62,9 @@ Template.product.helpers({
   },
   products_p: function (){
     return this.price;
+  },
+  src : function(){
+    return this.src;
   },
   point: function (){
     var number = Scores.find({product_id: this._id}).count();
@@ -115,25 +118,50 @@ Template.body.helpers({
 Template.profile.helpers({
   user_name: function(){
     console.log("profile");
-    console.log(Meteor.user().username || Meteor.user().profile.name);
-    return Meteor.user().username || Meteor.user().profile.name;
+    //console.log(Meteor.user().username || Meteor.user().profile.name);
+    console.log(this);
+    console.log(this.username);
+    var arry = Profile.findOne({owner: Session.get("p_id")}, {username: 1});
+    //return Meteor.user().username || Meteor.user().profile.name;
+    return arry.username;
   },
   wish_items: function(){
+    if (Session.get("p_id") == Meteor.userId())
+    {
+      Session.set("c_user", true);
+    }
+    else
+    {
+      Session.set("c_user", false);
+    }
+    console.log(Session.get("c_user"));
     console.log("wish_now")
     return Wish_list.find({
-      user_id: Meteor.userId()
+      user_id: Session.get("p_id")
       });
   },
   own_items: function(){
     console.log("own_now")
     return Own_list.find({
-      user_id: Meteor.userId()
+      user_id: Session.get("p_id")
       });
   },
   profiles: function(){
+    if (Session.get("p_id") == Meteor.userId())
+    {
+      Session.set("c_user", true);
+    }
+    else
+    {
+      Session.set("c_user", false);
+    }
+    console.log(Session.get("c_user"));
     return Profile.find({
-      user_id: Meteor.userId()
+      user_id: Session.get("p_id")
       });
+  },
+  c_user: function(){
+    return Session.get("c_user")
   },
 
 });
@@ -247,9 +275,15 @@ Accounts.onLogin(function(options, user) {
           createdAt: new Date(), // current time
           owner: Meteor.userId(),
           username: Meteor.user().username || Meteor.user().profile.name,
-          /*hair_color: "not",
+          hair_color: "not",
           eye_color: "not",
-          skin_type: "not",*/
+          skin_type: "not",
         });
   }
 })
+Tracker.autorun(function() {
+  var userId = Meteor.userId();
+  if (!userId) {
+    Router.go('/');  // go 'home' on logout
+  }
+});
